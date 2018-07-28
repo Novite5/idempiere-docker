@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:9-alpine
+    restart: always
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+
+  idempiere:
+    build:
+      context: idempiere
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+      - 8443:8443
+      - 12612:12612
+
+volumes:
+  postgres:
+    name: idempiere_postgres
