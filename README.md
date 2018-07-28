@@ -48,11 +48,11 @@ make up
 ## Default Accounts
 The following users and passwords are part of the initial seed database:
 
-Path: [http://localhost:8080/webui/](http://localhost:8080/webui/)
-
 |Usage|User|Password|
 |-|-|-|
 |System Management|System|System|
 |System Management or any role/company|SuperUser|System|
 |Sample Client Administration|GardenAdmin|GardenAdmin|
 |Sample Client User|GardenUser|GardenUser|
+
+Path: [http://localhost:8080/webui/](http://localhost:8080/webui/)
