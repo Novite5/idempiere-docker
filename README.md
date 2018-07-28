@@ -1,6 +1,6 @@
 # Dockerizing iDempiere
 
-This project was created to be used for development, and if you need a phoenix environment, not for production
+This project was created to be used for development, it's not for production
 
 Commands needed: `make`, `docker-compose`, `python`, `wget`, `jar`.
 
