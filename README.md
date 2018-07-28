@@ -1,6 +1,6 @@
 # Dockerizing iDempiere
 
-This project was created to be used in development if you need a phoenix environment, not for production
+This project was created to be used for development, and if you need a phoenix environment, not for production
 
 Commands needed: `make`, `docker-compose`, `python`, `wget`, `jar`.
 
@@ -19,9 +19,9 @@ make up
 
 ## Commands
 
-`make download` get the daily idempiere version
+`make download` gets the daily idempiere version
 
-`make extract` extract zip (needs `download`)
+`make extract` extracts zip file (needs `download`)
 
 `make config` executes the console-setup (needs `up-database`)
 
@@ -31,19 +31,19 @@ make up
 
 `make up` runs the application (needs `init`)
 
-`make up-database` only runs postgres
+`make up-database` runs postgres only
 
 `make down` stops the application
 
-`make delete` deletes containers and database
+`make delete` deletes containers and volumes
 
-`make show` shows the currents containers (needs `up`)
+`make show` shows the current containers (needs `up`)
 
-`make log` show the logs (needs `up`)
+`make log` shows the logs (needs `up`)
 
-`make init` executes all target (needs `up-database`)
+`make init` starts the configuration (needs `up-database`)
 
-`make console` open idempiere container (needs `run`)
+`make console` opens idempiere container (needs `run`)
 
 ## Default Accounts
 The following users and passwords are part of the initial seed database:
