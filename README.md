@@ -23,15 +23,15 @@ make up
 
 `make extract` extracts zip file (needs `download`)
 
-`make config` executes the console-setup (needs `up-database`)
+`make config` executes the console-setup (needs `db-up`)
 
-`make import-db` creates database (needs `up-database`)
+`make import-db` creates database (needs `db-up`)
 
 `make build` creates containers
 
 `make up` runs the application (needs `init`)
 
-`make up-database` runs postgres only
+`make db-up` runs postgres only
 
 `make down` stops the application
 
@@ -41,7 +41,7 @@ make up
 
 `make log` shows the logs (needs `up`)
 
-`make init` starts the configuration (needs `up-database`)
+`make init` starts the configuration (needs `db-up`)
 
 `make console` opens idempiere container (needs `run`)
 

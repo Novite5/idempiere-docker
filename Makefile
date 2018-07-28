@@ -7,7 +7,7 @@ build:
 up:
 	@docker-compose up -d && sleep 5
 
-up-database:
+db-up:
 	@docker-compose up -d postgres && sleep 5
 
 show:
@@ -45,4 +45,4 @@ log:
 console:
 	@docker-compose exec idempiere sh
 
-init: delete extract up-database import-db config down build
+init: delete extract db-up import-db config down build
