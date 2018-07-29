@@ -12,7 +12,7 @@ db-up:
 
 show:
 	@docker-compose ps
-	@echo '\nVolumes: ' && docker volume inspect idempiere_postgres
+	@echo '\nVolumes: ' && docker volume inspect idempiere_postgres || true
 
 down:
 	@docker-compose down
