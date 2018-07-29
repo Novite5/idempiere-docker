@@ -15,7 +15,7 @@ show:
 	@echo '\nVolumes: ' && docker volume inspect idempiere_postgres || true
 
 down:
-	@docker-compose down
+	@docker-compose stop
 
 delete:
 	@docker-compose rm -fsv
