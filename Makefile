@@ -22,7 +22,7 @@ delete:
 	@docker volume rm idempiere_postgres || true
 
 download:
-	@wget "https://razaoinfo.dl.sourceforge.net/project/idempiere/v5.1/daily-server/idempiereServer5.1Daily.gtk.linux.x86_64.zip" -O idempiere/resources/idempiere-server.zip
+	@wget "https://ufpr.dl.sourceforge.net/project/idempiere/v5.1/server/idempiereServer5.1.gtk.linux.x86_64.zip" -O idempiere/resources/idempiere-server.zip
 
 extract:
 	@rm -rf idempiere/resources/idempiere.gtk.linux.x86_64
