@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11
 COPY resources/idempiere.gtk.linux.x86_64/idempiere-server /idempiere-server
 COPY resources/idempiereEnv.properties /idempiere-server/idempiereEnv.properties
 COPY resources/myEnvironment.sh /idempiere-server/utils/myEnvironment.sh
