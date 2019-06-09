@@ -1,8 +1,8 @@
-FROM openjdk:11
+FROM store/oracle/database-instantclient:12.2.0.1
 
 LABEL maintainer="sauljabin@gmail.com"
 
-RUN apt-get update && apt-get install -y --no-install-recommends postgresql-client-9.6 && rm -rf /var/lib/apt/lists/*
+RUN yum update -y && yum install -y java-11-openjdk && yum clean all
 COPY /idempiere-server /idempiere-server
 COPY docker-entrypoint.sh /idempiere-server/docker-entrypoint.sh
 COPY idempiere-server.sh /idempiere-server/idempiere-server.sh

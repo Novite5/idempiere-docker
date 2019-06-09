@@ -12,7 +12,8 @@ unzip:
 	@ rm -rf idempiere.gtk.linux.x86_64
 
 build:
-	@ docker build -t idempiere:$(IDEMPIERE_VERSION) .
+	@ docker build -t idempiere:$(IDEMPIERE_VERSION) -t idempiere:latest .
+	@ docker build -t idempiere/oracle:$(IDEMPIERE_VERSION) -t idempiere/oracle:latest -f Dockerfile.oracle .
 
 bash:
 	@ docker run -it --rm idempiere:$(IDEMPIERE_VERSION) bash

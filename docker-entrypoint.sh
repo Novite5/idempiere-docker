@@ -50,6 +50,7 @@ function importPostgresDB() {
         echo "Database '$DB_NAME' not found, starting import..."
         cd utils
         ./RUN_ImportIdempiere.sh
+        echo "Synchronizing database..."
         ./RUN_SyncDB.sh
     else
         echo "Database '$DB_NAME' is found..."

@@ -22,6 +22,7 @@ echo ===================================
 
 # if don't set from service get default value
 TELNET_PORT=${TELNET_PORT:-12612}
+TELNET_HOST=${TELNET_HOST:-0.0.0.0}
 
 
 VMOPTS="-Dorg.osgi.framework.bootdelegation=sun.security.ssl,org.w3c.dom.events
@@ -29,7 +30,7 @@ VMOPTS="-Dorg.osgi.framework.bootdelegation=sun.security.ssl,org.w3c.dom.events
 -Djetty.home=$BASE/jettyhome
 -Djetty.base=$BASE/jettyhome
 -Djetty.etc.config.urls=etc/jetty.xml,etc/jetty-deployer.xml,etc/jetty-ssl.xml,etc/jetty-ssl-context.xml,etc/jetty-http.xml,etc/jetty-alpn.xml,etc/jetty-http2.xml,etc/jetty-https.xml
--Dosgi.console=$ADEMPIERE_APPS_SERVER:$TELNET_PORT
+-Dosgi.console=$TELNET_HOST:$TELNET_PORT
 -Dmail.mime.encodefilename=true
 -Dmail.mime.decodefilename=true
 -Dmail.mime.encodeparameters=true
