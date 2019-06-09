@@ -31,8 +31,47 @@ else
     DB_TYPE=1
 fi
 
+function waitForPostgres() {
+    RETRIES=60
+
+    until PGPASSWORD=$DB_ADMIN_PASS psql -h $DB_HOST -U postgres -c "\q" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
+        echo "Waiting for postgres server, $((RETRIES--)) remaining attempts..."
+        sleep 1
+    done
+
+    if [ "$RETRIES" = 0 ]; then
+        echo "Shuting down..."
+        exit 1
+    fi
+}
+
+function importPostgresDB() {
+    if ! PGPASSWORD=$DB_PASS psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c "\q" > /dev/null 2>&1 ; then
+        echo "Database '$DB_NAME' not found, starting import..."
+        cd utils
+        ./RUN_ImportIdempiere.sh
+        ./RUN_SyncDB.sh
+    else
+        echo "Database '$DB_NAME' is found..."
+    fi
+}
+
 if [ "$1" = 'idempiere' ]; then
-  echo -e "$JAVA_HOME\n$IDEMPIERE_HOME\n$KEY_STORE_PASS\n$KEY_STORE_ON\n$KEY_STORE_OU\n$KEY_STORE_O\n$KEY_STORE_L\n$KEY_STORE_S\n$KEY_STORE_C\n$IDEMPIERE_HOST\n$IDEMPIERE_PORT\n$IDEMPIERE_SSL_PORT\nN\n$DB_TYPE\n$DB_HOST\n$DB_PORT\n$DB_NAME\n$DB_USER\n$DB_PASS\n$DB_ADMIN_PASS\n$MAIL_HOST\n$MAIL_USER\nY\n" | ./console-setup.sh
+
+    if [ "$DB_TYPE" == 2 ]; then
+        waitForPostgres
+    else
+        echo "There is not 'waiting for oracle' function"
+    fi
+
+    echo -e "$JAVA_HOME\n$IDEMPIERE_HOME\n$KEY_STORE_PASS\n$KEY_STORE_ON\n$KEY_STORE_OU\n$KEY_STORE_O\n$KEY_STORE_L\n$KEY_STORE_S\n$KEY_STORE_C\n$IDEMPIERE_HOST\n$IDEMPIERE_PORT\n$IDEMPIERE_SSL_PORT\nN\n$DB_TYPE\n$DB_HOST\n$DB_PORT\n$DB_NAME\n$DB_USER\n$DB_PASS\n$DB_ADMIN_PASS\n$MAIL_HOST\n$MAIL_USER\nY\n" | ./console-setup.sh
+
+    if [ "$DB_TYPE" == 2 ]; then
+        importPostgresDB
+    else
+        echo "There is not 'import oracle db' function"
+    fi
+
 fi
 
 exec "$@"
