@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:9.6
+    volumes:
+      - idempiere:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_ADMIN_PASS}
+    ports:
+      - 5432:5432
+    networks:
+      - idempiere
+
+volumes:
+  idempiere:
+    external: true
+
+networks:
+  idempiere:
+    external: true

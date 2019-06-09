@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  idempiere:
+    image: idempiere:${IDEMPIERE_VERSION}
+    ports:
+      - 8080:8080
+      - 8443:8443
+      - 12612:12612
+    networks:
+      - idempiere
+
+networks:
+  idempiere:
+    external: true
