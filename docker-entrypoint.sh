@@ -19,10 +19,10 @@ DB_NAME=${DB_NAME:-idempiere}
 DB_USER=${DB_USER:-adempiere}
 DB_PASS=${DB_PASS:-adempiere}
 DB_ADMIN_PASS=${DB_ADMIN_PASS:-postgres}
-MAIL_HOST=${MAIL_HOST:-localhost}
+MAIL_HOST=${MAIL_HOST:-idempiere}
 MAIL_USER=${MAIL_USER:-info}
 MAIL_PASS=${MAIL_PASS:-info}
-MAIL_ADMIN=${MAIL_ADMIN:-info@localhost}
+MAIL_ADMIN=${MAIL_ADMIN:-info@idempiere}
 
 if [[ -n "$DB_PASS_FILE" ]]; then
     echo "DB_PASS_FILE set as $DB_PASS_FILE..."

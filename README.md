@@ -80,8 +80,28 @@ volumes:
 | Variable | Default Value | Description |
 | - | - | - |
 | KEY_STORE_PASS | myPassword | Password for java key store (SSL Certificate) |
+| KEY_STORE_ON | idempiere.org | Common Name for SSL Certificate |
+| KEY_STORE_OU | iDempiere Docker | Organization Unit for SSL Certificate |
+| KEY_STORE_O | iDempiere | Organization for SSL Certificate |
+| KEY_STORE_L | iDempiere | Locate/Town for SSL Certificate |
+| KEY_STORE_S | CA | State for SSL Certificate |
+| KEY_STORE_C | US | Country for SSL Certificate |
+| IDEMPIERE_PORT | 8080 | HTTP port for iDempiere |
+| IDEMPIERE_SSL_PORT | 8080 | HTTPS port for iDempiere |
+| TELNET_PORT | 12612 | OSGI port for telnet connection |
+| DB_HOST | postgres | Hostname for Postgres database |
+| DB_PORT | 5432 | Postgres port |
+| DB_NAME | idempiere | iDempiere Database |
+| DB_USER | adempiere | User for iDempiere Database |
+| DB_PASS | adempiere | Pass for `DB_USER` |
+| DB_ADMIN_PASS | postgres | Pass for admin user (`postgres` user) |
+| MAIL_HOST | idempiere | Mail server |
+| MAIL_USER | info | Mail user |
+| MAIL_PASS | info | Mail password |
+| MAIL_ADMIN | info@idempiere | Admin e-mail |
+| IDEMPIERE_JAVA_OPTIONS |  | Java execution parameters (e.g. `-Xms` and `-Xmx`) |
 
-## Ports
+## Default Ports
 
 | Port | Description |
 | - | - |
@@ -102,11 +122,10 @@ from files present in the container. See [Docker Secrets](https://docs.docker.co
 
 | Variable | Original variable |
 | - | - |
-| `DB_ADMIN_PASS_FILE` | `DB_ADMIN_PASS` |
-| `DB_PASS_FILE` | `DB_PASS` |
-| `MAIL_PASS_FILE` | `MAIL_PASS` |
-| `KEY_STORE_PASS_FILE` | `KEY_STORE_PASS` |
-
+| DB_ADMIN_PASS_FILE | DB_ADMIN_PASS |
+| DB_PASS_FILE | DB_PASS |
+| MAIL_PASS_FILE | MAIL_PASS |
+| KEY_STORE_PASS_FILE | KEY_STORE_PASS |
 
 #### Example:
 
