@@ -24,7 +24,11 @@ The following users and passwords are part of the initial seed database:
 
 ## How it works
 
+iDempiere starts looking for an existing database, if it don't exist
+iDempiere will create a seed database.
 
+Before starting, it will configure all the settings according to
+the `setup.sh` or `console-setup.sh` files. See [docker-entrypoint.sh](docker-entrypoint.sh) file.
 
 > This project has not support for oracle database.
 
@@ -87,7 +91,7 @@ volumes:
 | KEY_STORE_S | CA | State for SSL Certificate |
 | KEY_STORE_C | US | Country for SSL Certificate |
 | IDEMPIERE_PORT | 8080 | HTTP port for iDempiere |
-| IDEMPIERE_SSL_PORT | 8080 | HTTPS port for iDempiere |
+| IDEMPIERE_SSL_PORT | 8443 | HTTPS port for iDempiere |
 | TELNET_PORT | 12612 | OSGI port for telnet connection |
 | DB_HOST | postgres | Hostname for Postgres database |
 | DB_PORT | 5432 | Postgres port |
@@ -109,7 +113,21 @@ volumes:
 | 8443 | Default HTTPS port for iDempiere |
 | 12612 | Default OSGI port for telnet connection |
 
-## Docker Volumes
+## Volumes
+
+Postgres Data:
+
+```yaml
+volumes:
+  - idempiere_data:/var/lib/postgresql/data
+```
+
+iDempiere Plugins:
+
+```yaml
+volumes:
+  - idempiere_plugins:/idempiere-server/configuration
+```
 
 ## Docker Secrets
 
