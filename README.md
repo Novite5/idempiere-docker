@@ -15,14 +15,18 @@ Open in the browser: [http://localhost:8080/webui/](http://localhost:8080/webui/
 
 The following users and passwords are part of the initial seed database:
 
-|Usage|User|Password|
-|-|-|-|
-|System Management|System|System|
-|System Management or any role/company|SuperUser|System|
-|Sample Client Administration|GardenAdmin|GardenAdmin|
-|Sample Client User|GardenUser|GardenUser|
+| Usage | User | Password |
+| - | - | - |
+| System Management | System | System |
+| System Management or any role/company | SuperUser | System |
+| Sample Client Administration | GardenAdmin | GardenAdmin |
+| Sample Client User | GardenUser | GardenUser |
 
 ## How it works
+
+
+
+> This project has not support for oracle database.
 
 ## Make Commands
 
@@ -73,6 +77,18 @@ volumes:
 
 ## Environment Variables
 
+| Variable | Default Value | Description |
+| - | - | - |
+| KEY_STORE_PASS | myPassword | Password for java key store (SSL Certificate) |
+
+## Ports
+
+| Port | Description |
+| - | - |
+| 8080 | Default HTTP port for iDempiere |
+| 8443 | Default HTTPS port for iDempiere |
+| 12612 | Default OSGI port for telnet connection |
+
 ## Docker Volumes
 
 ## Docker Secrets
@@ -84,8 +100,8 @@ from files present in the container. See [Docker Secrets](https://docs.docker.co
 
 #### Variable list:
 
-| Variable |Original variable |
-| - | - | - |
+| Variable | Original variable |
+| - | - |
 | `DB_ADMIN_PASS_FILE` | `DB_ADMIN_PASS` |
 | `DB_PASS_FILE` | `DB_PASS` |
 | `MAIL_PASS_FILE` | `MAIL_PASS` |
