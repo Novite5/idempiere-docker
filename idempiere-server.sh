@@ -12,8 +12,10 @@ else
   echo Set JAVA_HOME to the directory of your local JDK.
 fi
 
+DEBUG_PORT=${DEBUG_PORT:-4554}
+
 if [ "$1" = "debug" ]; then
-  DEBUG="-Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=4554,server=y,suspend=n"
+  DEBUG="-Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=$DEBUG_PORT,server=y,suspend=n"
 fi
 
 echo ===================================
@@ -23,7 +25,6 @@ echo ===================================
 # if don't set from service get default value
 TELNET_PORT=${TELNET_PORT:-12612}
 TELNET_HOST=${TELNET_HOST:-0.0.0.0}
-
 
 VMOPTS="-Dorg.osgi.framework.bootdelegation=sun.security.ssl,org.w3c.dom.events
 -Dosgi.compatibility.bootdelegation=true
@@ -40,5 +41,9 @@ VMOPTS="-Dorg.osgi.framework.bootdelegation=sun.security.ssl,org.w3c.dom.events
 --add-exports java.naming/com.sun.jndi.ldap=ALL-UNNAMED
 --add-modules=ALL-SYSTEM
 --add-modules java.se --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.management/sun.management=ALL-UNNAMED --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED --add-exports java.base/jdk.internal.ref=ALL-UNNAMED --add-exports java.desktop/sun.awt=ALL-UNNAMED --add-exports java.sql.rowset/com.sun.rowset=ALL-UNNAMED --add-exports java.naming/com.sun.jndi.ldap=ALL-UNNAMED"
+
+IDEMPIERE_JAVA_OPTIONS=${JAVA_OPTS:-$IDEMPIERE_JAVA_OPTIONS}
+
+echo "Staring iDempiere: $JAVA ${DEBUG} $IDEMPIERE_JAVA_OPTIONS $VMOPTS -jar $BASE/plugins/org.eclipse.equinox.launcher_1.*.jar -application org.adempiere.server.application"
 
 $JAVA ${DEBUG} $IDEMPIERE_JAVA_OPTIONS $VMOPTS -jar $BASE/plugins/org.eclipse.equinox.launcher_1.*.jar -application org.adempiere.server.application

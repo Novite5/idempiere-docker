@@ -103,7 +103,8 @@ volumes:
 | MAIL_USER | info | Mail user |
 | MAIL_PASS | info | Mail password |
 | MAIL_ADMIN | info@idempiere | Admin e-mail |
-| IDEMPIERE_JAVA_OPTIONS |  | Java execution parameters (e.g. `-Xms` and `-Xmx`) |
+| JAVA_OPTS |  | Java execution parameters (e.g. `-Xms` and `-Xmx`) |
+| DEBUG_PORT| 4554 | Port for remote debug | 
 
 ## Default Ports
 
@@ -112,6 +113,7 @@ volumes:
 | 8080 | Default HTTP port for iDempiere |
 | 8443 | Default HTTPS port for iDempiere |
 | 12612 | Default OSGI port for telnet connection |
+| 4554 | Default remote debug port |
 
 ## Volumes
 
@@ -127,6 +129,13 @@ iDempiere Plugins:
 ```yaml
 volumes:
   - idempiere_plugins:/idempiere-server/configuration
+```
+
+## Run as Debug
+
+Adding command yml property:
+```yaml
+command: idempiere debug
 ```
 
 ## Docker Secrets
