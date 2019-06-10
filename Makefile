@@ -1,8 +1,5 @@
--include .env
-export
-
 download:
-	@ wget "https://ufpr.dl.sourceforge.net/project/idempiere/v$(IDEMPIERE_VERSION)/server/idempiereServer$(IDEMPIERE_VERSION).gtk.linux.x86_64.zip" -O idempiere-server.zip
+	@ wget "https://ufpr.dl.sourceforge.net/project/idempiere/v6.2/server/idempiereServer6.2.gtk.linux.x86_64.zip" -O idempiere-server.zip
 	@ make unzip
 
 unzip:
@@ -12,11 +9,10 @@ unzip:
 	@ rm -rf idempiere.gtk.linux.x86_64
 
 build:
-	@ docker build -t idempiere:$(IDEMPIERE_VERSION) -t idempiere:latest .
-	@ docker build -t idempiere/oracle:$(IDEMPIERE_VERSION) -t idempiere/oracle:latest -f Dockerfile.oracle .
+	@ docker build -t idempiere:6.2 -t idempiere:latest .
 
 bash:
-	@ docker run -it --rm idempiere:$(IDEMPIERE_VERSION) bash
+	@ docker run -it --rm idempiere:6.2 bash
 
 run:
 	@ docker stack deploy -c docker-stack.yml idempiere
