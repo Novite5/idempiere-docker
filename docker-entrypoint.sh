@@ -24,21 +24,41 @@ MAIL_USER=${MAIL_USER:-info}
 MAIL_PASS=${MAIL_PASS:-info}
 MAIL_ADMIN=${MAIL_ADMIN:-info@localhost}
 
-function waitForPostgres() {
-    RETRIES=10
+if [[ -n "$DB_PASS_FILE" ]]; then
+    echo "DB_PASS_FILE set as $DB_PASS_FILE..."
+    DB_PASS=$(cat $DB_PASS_FILE)
+fi
 
-    until PGPASSWORD=$DB_ADMIN_PASS psql -h $DB_HOST -U postgres -c "\q" > /dev/null 2>&1 || [ $RETRIES -eq 0 ]; do
+if [[ -n "$DB_ADMIN_PASS_FILE" ]]; then
+    echo "DB_ADMIN_PASS_FILE set as $DB_ADMIN_PASS_FILE..."
+    DB_ADMIN_PASS=$(cat $DB_ADMIN_PASS_FILE)
+fi
+
+if [[ -n "$MAIL_PASS_FILE" ]]; then
+    echo "MAIL_PASS_FILE set as $MAIL_PASS_FILE..."
+    MAIL_PASS=$(cat $MAIL_PASS_FILE)
+fi
+
+if [[ -n "$KEY_STORE_PASS_FILE" ]]; then
+    echo "KEY_STORE_PASS_FILE set as $KEY_STORE_PASS_FILE..."
+    KEY_STORE_PASS=$(cat $KEY_STORE_PASS_FILE)
+fi
+
+if [[ "$1" = "idempiere" ]]; then
+    RETRIES=60
+
+    until PGPASSWORD=$DB_ADMIN_PASS psql -h $DB_HOST -U postgres -c "\q" > /dev/null 2>&1 || [[ $RETRIES -eq 0 ]]; do
         echo "Waiting for postgres server, $((RETRIES--)) remaining attempts..."
         sleep 1
     done
 
-    if [ "$RETRIES" = 0 ]; then
+    if [[ "$RETRIES" -eq 0 ]]; then
         echo "Shutting down..."
         exit 1
     fi
-}
 
-function importPostgresDB() {
+    echo -e "$JAVA_HOME\n$IDEMPIERE_HOME\n$KEY_STORE_PASS\n$KEY_STORE_ON\n$KEY_STORE_OU\n$KEY_STORE_O\n$KEY_STORE_L\n$KEY_STORE_S\n$KEY_STORE_C\n$IDEMPIERE_HOST\n$IDEMPIERE_PORT\n$IDEMPIERE_SSL_PORT\nN\n2\n$DB_HOST\n$DB_PORT\n$DB_NAME\n$DB_USER\n$DB_PASS\n$DB_ADMIN_PASS\n$MAIL_HOST\n$MAIL_USER\nY\n" | ./console-setup.sh
+
     if ! PGPASSWORD=$DB_PASS psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c "\q" > /dev/null 2>&1 ; then
         echo "Database '$DB_NAME' not found, starting import..."
         cd utils
@@ -48,12 +68,6 @@ function importPostgresDB() {
     else
         echo "Database '$DB_NAME' is found..."
     fi
-}
-
-if [ "$1" = 'idempiere' ]; then
-    waitForPostgres
-    echo -e "$JAVA_HOME\n$IDEMPIERE_HOME\n$KEY_STORE_PASS\n$KEY_STORE_ON\n$KEY_STORE_OU\n$KEY_STORE_O\n$KEY_STORE_L\n$KEY_STORE_S\n$KEY_STORE_C\n$IDEMPIERE_HOST\n$IDEMPIERE_PORT\n$IDEMPIERE_SSL_PORT\nN\n2\n$DB_HOST\n$DB_PORT\n$DB_NAME\n$DB_USER\n$DB_PASS\n$DB_ADMIN_PASS\n$MAIL_HOST\n$MAIL_USER\nY\n" | ./console-setup.sh
-    importPostgresDB
 fi
 
 exec "$@"
