@@ -1,12 +1,16 @@
 # Dockerizing iDempiere 6.2
 
-Dependencies commands: `make`, `unzip`, `wget` and [docker](https://docs.docker.com/install/).
+Dependencies commands: `make` and [docker](https://docs.docker.com/install/).
+
+- [Docker Hub](https://hub.docker.com/r/sauljabin/idempiere)
+- [Git Hub](https://github.com/sauljabin/idempiere-docker)
+- [iDempiere](https://www.idempiere.org/)
 
 ## Getting Started
 
 ```
 $ docker swarm init
-$ make download build run
+$ make build run
 ```
 
 Open in the browser: [http://localhost:8080/webui/](http://localhost:8080/webui/)
@@ -27,14 +31,22 @@ The following users and passwords are part of the initial seed database:
 iDempiere starts looking for an existing database, if it don't exist
 iDempiere will create a seed database.
 
+> If the database exists iDempiere won't migrate it, you must do it manually, or using `MIGRATE_DATABASE_IF_EXIST=true`.
+
 Before starting, it will configure all the settings according to
 the `setup.sh` or `console-setup.sh` files. See [docker-entrypoint.sh](docker-entrypoint.sh) file.
 
 > This project has not support for oracle database.
 
-## Make Commands
+## Using from Docker Hub
 
-`make download` downloads iDempiere
+Image: `sauljabin/idempiere`.
+
+```bash
+$ docker pull sauljabin/idempiere
+```
+
+## Make Commands
 
 `make build` creates iDempiere docker image (with labels `idempiere:6.2` and `idempiere:latest`)
 
@@ -43,8 +55,6 @@ the `setup.sh` or `console-setup.sh` files. See [docker-entrypoint.sh](docker-en
 `make stop` stops the stack
 
 `make log` shows the logs of iDempiere
-
-`make unzip` extracts iDempire
 
 `make bash` creates a terminal within iDempiere docker image
 
@@ -83,6 +93,9 @@ volumes:
 
 | Variable | Default Value | Description |
 | - | - | - |
+| JAVA_HOME | /usr/local/openjdk-11 | Path to java |
+| IDEMPIERE_HOME | /idempiere | Path to iDempiere |
+| IDEMPIERE_VERSION | 6.2 | iDempiere Version |
 | KEY_STORE_PASS | myPassword | Password for java key store (SSL Certificate) |
 | KEY_STORE_ON | idempiere.org | Common Name for SSL Certificate |
 | KEY_STORE_OU | iDempiere Docker | Organization Unit for SSL Certificate |
@@ -104,7 +117,8 @@ volumes:
 | MAIL_PASS | info | Mail password |
 | MAIL_ADMIN | info@idempiere | Admin e-mail |
 | JAVA_OPTS |  | Java execution parameters (e.g. `-Xms` and `-Xmx`) |
-| DEBUG_PORT| 4554 | Port for remote debug | 
+| DEBUG_PORT| 4554 | Port for remote debug |
+| MIGRATE_DATABASE_IF_EXIST | false | Migrate the existing database to latest version |
 
 ## Default Ports
 
@@ -140,9 +154,9 @@ command: idempiere debug
 
 ## Docker Secrets
 
-As an alternative to passing sensitive information via environment variables, 
-`_FILE` may be appended to some of the previously listed environment variables, 
-causing the initialization script to load the values for those variables 
+As an alternative to passing sensitive information via environment variables,
+`_FILE` may be appended to some of the previously listed environment variables,
+causing the initialization script to load the values for those variables
 from files present in the container. See [Docker Secrets](https://docs.docker.com/engine/swarm/secrets/) and [Docker PosgreSQL](https://hub.docker.com/_/postgres).
 
 #### Variable list:

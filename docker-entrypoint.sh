@@ -2,7 +2,6 @@
 
 set -Eeo pipefail
 
-IDEMPIERE_HOME=${IDEMPIERE_HOME:-/idempiere-server}
 KEY_STORE_PASS=${KEY_STORE_PASS:-myPassword}
 KEY_STORE_ON=${KEY_STORE_ON:-idempiere.org}
 KEY_STORE_OU=${KEY_STORE_OU:-iDempiere Docker}
@@ -23,6 +22,7 @@ MAIL_HOST=${MAIL_HOST:-idempiere}
 MAIL_USER=${MAIL_USER:-info}
 MAIL_PASS=${MAIL_PASS:-info}
 MAIL_ADMIN=${MAIL_ADMIN:-info@idempiere}
+MIGRATE_DATABASE_IF_EXIST=${MIGRATE_DATABASE_IF_EXIST:false}
 
 if [[ -n "$DB_PASS_FILE" ]]; then
     echo "DB_PASS_FILE set as $DB_PASS_FILE..."
@@ -44,15 +44,15 @@ if [[ -n "$KEY_STORE_PASS_FILE" ]]; then
     KEY_STORE_PASS=$(cat $KEY_STORE_PASS_FILE)
 fi
 
-if [[ "$1" = "idempiere" ]]; then
-    RETRIES=60
+if [[ "$1" == "idempiere" ]]; then
+    RETRIES=30
 
-    until PGPASSWORD=$DB_ADMIN_PASS psql -h $DB_HOST -U postgres -c "\q" > /dev/null 2>&1 || [[ $RETRIES -eq 0 ]]; do
+    until PGPASSWORD=$DB_ADMIN_PASS psql -h $DB_HOST -U postgres -c "\q" > /dev/null 2>&1 || [[ $RETRIES == 0 ]]; do
         echo "Waiting for postgres server, $((RETRIES--)) remaining attempts..."
         sleep 1
     done
 
-    if [[ "$RETRIES" -eq 0 ]]; then
+    if [[ $RETRIES == 0 ]]; then
         echo "Shutting down..."
         exit 1
     fi
@@ -60,13 +60,20 @@ if [[ "$1" = "idempiere" ]]; then
     echo -e "$JAVA_HOME\n$IDEMPIERE_HOME\n$KEY_STORE_PASS\n$KEY_STORE_ON\n$KEY_STORE_OU\n$KEY_STORE_O\n$KEY_STORE_L\n$KEY_STORE_S\n$KEY_STORE_C\n$IDEMPIERE_HOST\n$IDEMPIERE_PORT\n$IDEMPIERE_SSL_PORT\nN\n2\n$DB_HOST\n$DB_PORT\n$DB_NAME\n$DB_USER\n$DB_PASS\n$DB_ADMIN_PASS\n$MAIL_HOST\n$MAIL_USER\nY\n" | ./console-setup.sh
 
     if ! PGPASSWORD=$DB_PASS psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c "\q" > /dev/null 2>&1 ; then
-        echo "Database '$DB_NAME' not found, starting import..."
         cd utils
+        echo "Database '$DB_NAME' not found, starting import..."
         ./RUN_ImportIdempiere.sh
         echo "Synchronizing database..."
         ./RUN_SyncDB.sh
     else
         echo "Database '$DB_NAME' is found..."
+        if [[ "$MIGRATE_DATABASE_IF_EXIST" == "true" ]]; then
+            cd utils
+            echo "MIGRATE_DATABASE_IF_EXIST is equal to 'true'. Synchronizing database..."
+            ./RUN_SyncDB.sh
+        else
+            echo "MIGRATE_DATABASE_IF_EXIST is equal to 'false'. Skipping..."
+        fi
     fi
 fi
 

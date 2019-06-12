@@ -2,13 +2,22 @@ FROM openjdk:11
 
 LABEL maintainer="sauljabin@gmail.com"
 
-RUN apt-get update && apt-get install -y --no-install-recommends postgresql-client-9.6 && rm -rf /var/lib/apt/lists/*
-COPY /idempiere-server /idempiere-server
-COPY docker-entrypoint.sh /idempiere-server/docker-entrypoint.sh
-COPY idempiere-server.sh /idempiere-server/idempiere-server.sh
-RUN ln -s /idempiere-server/idempiere-server.sh /usr/bin/idempiere
-WORKDIR /idempiere-server
+ENV IDEMPIERE_VERSION 6.2
+ENV IDEMPIERE_HOME /idempiere
 
-EXPOSE 8080 8443 12612
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends postgresql-client-9.6 && \
+    rm -rf /var/lib/apt/lists/*
+RUN wget -q "https://ufpr.dl.sourceforge.net/project/idempiere/v$IDEMPIERE_VERSION/server/idempiereServer$IDEMPIERE_VERSION.gtk.linux.x86_64.zip" -O /tmp/idempiere-server.zip && \
+    unzip -q -o /tmp/idempiere-server.zip -d /tmp && \
+    mv /tmp/idempiere.gtk.linux.x86_64/idempiere-server /idempiere && \
+    rm -rf /tmp/idempiere*
+RUN ln -s /idempiere/idempiere-server.sh /usr/bin/idempiere
+
+COPY docker-entrypoint.sh /idempiere/docker-entrypoint.sh
+COPY idempiere-server.sh /idempiere/idempiere-server.sh
+
+WORKDIR /idempiere
+
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["idempiere"]
