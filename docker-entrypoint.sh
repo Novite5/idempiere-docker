@@ -22,7 +22,7 @@ MAIL_HOST=${MAIL_HOST:-idempiere}
 MAIL_USER=${MAIL_USER:-info}
 MAIL_PASS=${MAIL_PASS:-info}
 MAIL_ADMIN=${MAIL_ADMIN:-info@idempiere}
-MIGRATE_DATABASE_IF_EXIST=${MIGRATE_DATABASE_IF_EXIST:false}
+MIGRATE_EXISTING_DATABASE=${MIGRATE_EXISTING_DATABASE:false}
 
 if [[ -n "$DB_PASS_FILE" ]]; then
     echo "DB_PASS_FILE set as $DB_PASS_FILE..."
@@ -67,7 +67,7 @@ if [[ "$1" == "idempiere" ]]; then
         ./RUN_SyncDB.sh
     else
         echo "Database '$DB_NAME' is found..."
-        if [[ "$MIGRATE_DATABASE_IF_EXIST" == "true" ]]; then
+        if [[ "$MIGRATE_EXISTING_DATABASE" == "true" ]]; then
             cd utils
             echo "MIGRATE_DATABASE_IF_EXIST is equal to 'true'. Synchronizing database..."
             ./RUN_SyncDB.sh

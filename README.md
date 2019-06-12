@@ -31,7 +31,7 @@ The following users and passwords are part of the initial seed database:
 iDempiere starts looking for an existing database, if it don't exist
 iDempiere will create a seed database.
 
-> If the database exists iDempiere won't migrate it, you must do it manually, or using `MIGRATE_DATABASE_IF_EXIST=true`.
+> If the database exists iDempiere won't migrate it, you must do it manually, or using `MIGRATE_EXISTING_DATABASE=true`.
 
 Before starting, it will configure all the settings according to
 the `setup.sh` or `console-setup.sh` files. See [docker-entrypoint.sh](docker-entrypoint.sh) file.
@@ -118,7 +118,7 @@ volumes:
 | MAIL_ADMIN | info@idempiere | Admin e-mail |
 | JAVA_OPTS |  | Java execution parameters (e.g. `-Xms` and `-Xmx`) |
 | DEBUG_PORT| 4554 | Port for remote debug |
-| MIGRATE_DATABASE_IF_EXIST | false | Migrate the existing database to latest version |
+| MIGRATE_EXISTING_DATABASE | false | Migrate the existing database to latest version |
 
 ## Default Ports
 
