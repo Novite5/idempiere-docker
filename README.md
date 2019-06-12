@@ -142,7 +142,7 @@ iDempiere Plugins:
 
 ```yaml
 volumes:
-  - idempiere_plugins:/idempiere-server/configuration
+  - idempiere_plugins:/idempiere/configuration
 ```
 
 ## Run as Debug
