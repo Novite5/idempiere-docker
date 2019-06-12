@@ -2,6 +2,8 @@
 
 set -Eeo pipefail
 
+echo "iDempiere Docker Documentation https://hub.docker.com/r/sauljabin/idempiere"
+
 KEY_STORE_PASS=${KEY_STORE_PASS:-myPassword}
 KEY_STORE_ON=${KEY_STORE_ON:-idempiere.org}
 KEY_STORE_OU=${KEY_STORE_OU:-iDempiere Docker}

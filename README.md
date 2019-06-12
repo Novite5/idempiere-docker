@@ -1,7 +1,5 @@
 # Dockerizing iDempiere 6.2
 
-Dependencies commands: `make` and [docker](https://docs.docker.com/install/).
-
 - [Docker Hub](https://hub.docker.com/r/sauljabin/idempiere)
 - [Git Hub](https://github.com/sauljabin/idempiere-docker)
 - [iDempiere](https://www.idempiere.org/)
@@ -44,6 +42,18 @@ Image: `sauljabin/idempiere`.
 
 ```bash
 $ docker pull sauljabin/idempiere
+```
+
+Stack:
+
+```yaml
+version: '3.7'
+
+services:
+  idempiere:
+    image: sauljabin/idempiere:6.2
+    ports:
+      - 8080:8080
 ```
 
 ## Make Commands
@@ -93,7 +103,6 @@ volumes:
 
 | Variable | Default Value | Description |
 | - | - | - |
-| JAVA_HOME | /usr/local/openjdk-11 | Path to java |
 | IDEMPIERE_HOME | /idempiere | Path to iDempiere |
 | IDEMPIERE_VERSION | 6.2 | iDempiere Version |
 | KEY_STORE_PASS | myPassword | Password for java key store (SSL Certificate) |
@@ -116,6 +125,7 @@ volumes:
 | MAIL_USER | info | Mail user |
 | MAIL_PASS | info | Mail password |
 | MAIL_ADMIN | info@idempiere | Admin e-mail |
+| JAVA_HOME | /usr/local/openjdk-11 | Path to java |
 | JAVA_OPTS |  | Java execution parameters (e.g. `-Xms` and `-Xmx`) |
 | DEBUG_PORT| 4554 | Port for remote debug |
 | MIGRATE_EXISTING_DATABASE | false | Migrate the existing database to latest version |
