@@ -71,10 +71,10 @@ if [[ "$1" == "idempiere" ]]; then
         echo "Database '$DB_NAME' is found..."
         if [[ "$MIGRATE_EXISTING_DATABASE" == "true" ]]; then
             cd utils
-            echo "MIGRATE_DATABASE_IF_EXIST is equal to 'true'. Synchronizing database..."
+            echo "MIGRATE_EXISTING_DATABASE is equal to 'true'. Synchronizing database..."
             ./RUN_SyncDB.sh
         else
-            echo "MIGRATE_DATABASE_IF_EXIST is equal to 'false'. Skipping..."
+            echo "MIGRATE_EXISTING_DATABASE is equal to 'false'. Skipping..."
         fi
     fi
 fi
