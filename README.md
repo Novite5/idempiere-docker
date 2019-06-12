@@ -105,6 +105,8 @@ volumes:
 | - | - | - |
 | IDEMPIERE_HOME | /idempiere | Path to iDempiere |
 | IDEMPIERE_VERSION | 6.2 | iDempiere Version |
+| IDEMPIERE_PORT | 8080 | HTTP port for iDempiere |
+| IDEMPIERE_SSL_PORT | 8443 | HTTPS port for iDempiere |
 | KEY_STORE_PASS | myPassword | Password for java key store (SSL Certificate) |
 | KEY_STORE_ON | idempiere.org | Common Name for SSL Certificate |
 | KEY_STORE_OU | iDempiere Docker | Organization Unit for SSL Certificate |
@@ -112,9 +114,6 @@ volumes:
 | KEY_STORE_L | iDempiere | Locate/Town for SSL Certificate |
 | KEY_STORE_S | CA | State for SSL Certificate |
 | KEY_STORE_C | US | Country for SSL Certificate |
-| IDEMPIERE_PORT | 8080 | HTTP port for iDempiere |
-| IDEMPIERE_SSL_PORT | 8443 | HTTPS port for iDempiere |
-| TELNET_PORT | 12612 | OSGI port for telnet connection |
 | DB_HOST | postgres | Hostname for Postgres database |
 | DB_PORT | 5432 | Postgres port |
 | DB_NAME | idempiere | iDempiere Database |
@@ -128,6 +127,7 @@ volumes:
 | JAVA_HOME | /usr/local/openjdk-11 | Path to java |
 | JAVA_OPTS |  | Java execution parameters (e.g. `-Xms` and `-Xmx`) |
 | DEBUG_PORT| 4554 | Port for remote debug |
+| TELNET_PORT | 12612 | OSGI port for telnet connection |
 | MIGRATE_EXISTING_DATABASE | false | Migrate the existing database to latest version |
 
 ## Default Ports
