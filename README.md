@@ -157,7 +157,7 @@ volumes:
 
 ## Run as Debug
 
-Adding command yml property:
+Adding `command` yml property:
 ```yaml
 command: idempiere debug
 ```
