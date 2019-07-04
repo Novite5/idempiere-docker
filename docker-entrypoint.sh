@@ -20,7 +20,7 @@ DB_NAME=${DB_NAME:-idempiere}
 DB_USER=${DB_USER:-adempiere}
 DB_PASS=${DB_PASS:-adempiere}
 DB_ADMIN_PASS=${DB_ADMIN_PASS:-postgres}
-MAIL_HOST=${MAIL_HOST:-idempiere}
+MAIL_HOST=${MAIL_HOST:-0.0.0.0}
 MAIL_USER=${MAIL_USER:-info}
 MAIL_PASS=${MAIL_PASS:-info}
 MAIL_ADMIN=${MAIL_ADMIN:-info@idempiere}
@@ -59,7 +59,7 @@ if [[ "$1" == "idempiere" ]]; then
         exit 1
     fi
 
-    echo -e "$JAVA_HOME\n$IDEMPIERE_HOME\n$KEY_STORE_PASS\n$KEY_STORE_ON\n$KEY_STORE_OU\n$KEY_STORE_O\n$KEY_STORE_L\n$KEY_STORE_S\n$KEY_STORE_C\n$IDEMPIERE_HOST\n$IDEMPIERE_PORT\n$IDEMPIERE_SSL_PORT\nN\n2\n$DB_HOST\n$DB_PORT\n$DB_NAME\n$DB_USER\n$DB_PASS\n$DB_ADMIN_PASS\n$MAIL_HOST\n$MAIL_USER\nY\n" | ./console-setup.sh
+    echo -e "$JAVA_HOME\n$IDEMPIERE_HOME\n$KEY_STORE_PASS\n$KEY_STORE_ON\n$KEY_STORE_OU\n$KEY_STORE_O\n$KEY_STORE_L\n$KEY_STORE_S\n$KEY_STORE_C\n$IDEMPIERE_HOST\n$IDEMPIERE_PORT\n$IDEMPIERE_SSL_PORT\nN\n2\n$DB_HOST\n$DB_PORT\n$DB_NAME\n$DB_USER\n$DB_PASS\n$DB_ADMIN_PASS\n$MAIL_HOST\n$MAIL_USER\n$MAIL_PASS\n$MAIL_ADMIN\nY\n" | ./console-setup.sh
 
     if ! PGPASSWORD=$DB_PASS psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c "\q" > /dev/null 2>&1 ; then
         cd utils
