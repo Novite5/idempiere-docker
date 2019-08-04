@@ -19,5 +19,10 @@ RUN ln -s $IDEMPIERE_HOME/idempiere-server.sh /usr/bin/idempiere
 COPY docker-entrypoint.sh $IDEMPIERE_HOME
 COPY idempiere-server.sh $IDEMPIERE_HOME
 
+# import chinese translation
+RUN wget -nv https://bitbucket.org/iDChina/chinese-translation/get/default.tar.gz -O /tmp/chinese.tar.gz && \
+    tar xf /tmp/chinese.tar.gz /idempiere/data/zh_CN && \
+    rm -rf /tmp/chinese.tar.gz
+
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["idempiere"]
